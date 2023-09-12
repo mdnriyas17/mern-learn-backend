@@ -2,15 +2,13 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const UserModel = require("./models/Users");
-
+const env = require('dotenv').config();
 const cors = require("cors");
 
 app.use(express.json());
 app.use(cors());
+`mongoose.connect(process.env.MONGODB_URI)`
 
-mongoose.connect(
-    "mongodb+srv://mdnriyas:mdnriyas@website.jda6y4x.mongodb.net/newone"
-);
 app.get(
     "/getUsers", (async (req, res) => {
         const user = await UserModel.find({});
@@ -31,7 +29,7 @@ app.post("/createUser", async (req, res) => {
 
     res.json(user);
 });
-
-app.listen(3001, () => {
-    console.log("SERVER RUNS PERFECTLY!");
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+    console.log(`SERVER RUNS PERFECTLY ${PORT}`);
 });
